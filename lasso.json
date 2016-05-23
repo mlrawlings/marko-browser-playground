@@ -1,0 +1,6 @@
+{
+    "outputDir":".",
+    "bundlingEnabled": true,
+    "fingerprintsEnabled": false,
+    "minify":false
+}
