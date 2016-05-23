@@ -7,7 +7,7 @@ window.marko = {
     templates:{},
     defineComponent:widgets.defineComponent,
     ready:domready,
-    compile:(name, src) {
+    compile:function(name, src) {
         if(!name) {
             throw new Error('A name must be defined for this template');
         }
