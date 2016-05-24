@@ -30889,7 +30889,7 @@ window.marko = {
             throw new Error('A template with that name has already been registered');
         }
 
-        var compiledSrc = compiler.compile(replaceIncludes(src), name, null);
+        var compiledSrc = compiler.compile(replaceIncludes(src.trim()), name, null);
         var template = evalCommonJsTemplateSrc(name, compiledSrc);
         window.marko.templates[name] = template;
         return template;
@@ -30931,3 +30931,6 @@ domready(function() {
 });
 });
 $rmod.run("/source");
+        window.global = window.global || {};
+        $rmod.pending().done();
+    

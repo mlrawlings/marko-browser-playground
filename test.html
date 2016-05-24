@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Test Marko Browser Playground</title>
+</head>
+<body>
+    <div id="main"></div>
+    <script name="main" type="marko">
+        <div>Hello ${data.name}</div>
+    </script>
+    <script src="./marko-browser.js"></script>
+    <script>
+        marko.ready(function() {
+            marko.templates.main.render({ name:'Bob' }, function(err, html) {
+                document.getElementById('main').innerHTML = html;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+var fs = require('fs');
 var lasso = require('lasso');
 lasso.configure('lasso.json');
 lasso.lassoPage({
@@ -13,6 +14,11 @@ lasso.lassoPage({
     if(err) {
         throw err;
     }
+
+    fs.appendFileSync('./marko-browser.js', `
+        window.global = window.global || {};
+        $rmod.pending().done();
+    `);
 
     console.log('Written.')
 })
