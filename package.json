@@ -11,9 +11,12 @@
   "license": "ISC",
   "devDependencies": {
     "domready": "^1.0.8",
+    "events": "^1.1.0",
     "lasso": "^1.20.0",
     "marko": "*",
     "marko-widgets": "^6.1.0",
-    "strip-indent": "^2.0.0"
+    "resolve-url": "^0.2.1",
+    "strip-indent": "^2.0.0",
+    "xhr": "^2.2.0"
   }
 }
