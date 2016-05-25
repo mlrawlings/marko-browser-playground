@@ -30871,10 +30871,29 @@ exports.onAfterUpdate = updateManager.onAfterUpdate;
 window.$MARKO_WIDGETS = exports; // Helpful when debugging... WARNING: DO NOT USE IN REAL CODE!
 
 });
+$rmod.main("/strip-indent@2.0.0", "index");
+$rmod.dep("", "strip-indent", "2.0.0");
+$rmod.def("/strip-indent@2.0.0/index", function(require, exports, module, __filename, __dirname) { 'use strict';
+module.exports = str => {
+	const match = str.match(/^[ \t]*(?=\S)/gm);
+
+	if (!match) {
+		return str;
+	}
+
+	// TODO: use spread operator when targeting Node.js 6
+	const indent = Math.min.apply(Math, match.map(x => x.length)); // eslint-disable-line
+	const re = new RegExp(`^[ \\t]{${indent}}`, 'gm');
+
+	return indent > 0 ? str.replace(re, '') : str;
+};
+
+});
 $rmod.def("/source", function(require, exports, module, __filename, __dirname) { var runtime = require('/$/marko'/*'marko'*/);
 var compiler = require('/$/marko/compiler'/*'marko/compiler'*/);
 var domready = require('/$/domready'/*'domready'*/);
 var widgets = require('/$/marko-widgets'/*'marko-widgets'*/);
+var stripIndent = require('/$/strip-indent'/*'strip-indent'*/);
 
 window.marko = {
     templates:{},
@@ -30889,7 +30908,7 @@ window.marko = {
             throw new Error('A template with that name has already been registered');
         }
 
-        var compiledSrc = compiler.compile(replaceIncludes(src.trim()), name, null);
+        var compiledSrc = compiler.compile(replaceIncludes(stripIndent(src)), name, null);
         var template = evalCommonJsTemplateSrc(name, compiledSrc);
         window.marko.templates[name] = template;
         return template;
@@ -30897,7 +30916,7 @@ window.marko = {
 }
 
 function replaceIncludes(src) {
-    return src.replace(/<include\(("[^"]+"|'[^']+')\)/g, '<include(window.marko.templates[$1])');
+    return src.replace(/<include\(("[^"]+"|'[^']+')/g, '<include(window.marko.templates[$1]');
 }
 
 function evalCommonJsTemplateSrc(name, src) {

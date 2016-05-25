@@ -2,6 +2,7 @@ var runtime = require('marko');
 var compiler = require('marko/compiler');
 var domready = require('domready');
 var widgets = require('marko-widgets');
+var stripIndent = require('strip-indent');
 
 window.marko = {
     templates:{},
@@ -16,7 +17,7 @@ window.marko = {
             throw new Error('A template with that name has already been registered');
         }
 
-        var compiledSrc = compiler.compile(replaceIncludes(src.trim()), name, null);
+        var compiledSrc = compiler.compile(replaceIncludes(stripIndent(src)), name, null);
         var template = evalCommonJsTemplateSrc(name, compiledSrc);
         window.marko.templates[name] = template;
         return template;
@@ -24,7 +25,7 @@ window.marko = {
 }
 
 function replaceIncludes(src) {
-    return src.replace(/<include\(("[^"]+"|'[^']+')\)/g, '<include(window.marko.templates[$1])');
+    return src.replace(/<include\(("[^"]+"|'[^']+')/g, '<include(window.marko.templates[$1]');
 }
 
 function evalCommonJsTemplateSrc(name, src) {

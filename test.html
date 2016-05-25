@@ -8,6 +8,10 @@
 <body>
     <div id="main"></div>
     <script name="main" type="marko">
+        <h1>This is a test.</h1>
+        <include('welcome') name=data.name />
+    </script>
+    <script name="welcome" type="marko">
         <div>Hello ${data.name}</div>
     </script>
     <script src="./marko-browser.js"></script>
